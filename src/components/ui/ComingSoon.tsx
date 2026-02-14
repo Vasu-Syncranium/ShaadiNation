@@ -123,7 +123,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     gap: '15px',
     fontSize: 'clamp(1.5rem, 3vw, 2rem)',
     fontWeight: 600,
-    marginBottom: 'clamp(1rem, 2vw, 1.5rem)',
+    marginBottom: 'clamp(1rem, 2vw, 1rem)',
     color: '#2d2d2d',
     flexWrap: 'wrap',
   },
@@ -134,7 +134,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: 'clamp(1rem, 4vw, 1.5rem)',
     fontWeight: 500,
     color: '#000',
-    marginBottom: 'clamp(1.5rem, 3vw, 2rem)',
+    marginBottom: 'clamp(1rem, 3vw, 1rem)',
     letterSpacing: '0.05em',
   },
   phoneLink: {
