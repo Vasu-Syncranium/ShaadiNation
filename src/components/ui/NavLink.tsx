@@ -1,26 +1,42 @@
-import { NavLink as RouterNavLink, NavLinkProps } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
-interface NavLinkCompatProps extends Omit<NavLinkProps, "className"> {
-  className?: string;
+interface NavLinkCompatProps {
+  to: string;
+  className?: string | ((props: { isActive: boolean; isPending: boolean }) => string | undefined);
   activeClassName?: string;
   pendingClassName?: string;
+  children?: React.ReactNode;
+  [key: string]: any;
 }
 
 const NavLink = forwardRef<HTMLAnchorElement, NavLinkCompatProps>(
-  ({ className, activeClassName, pendingClassName, to, ...props }, ref) => {
+  ({ to, className, activeClassName, pendingClassName, ...props }, ref) => {
+    const pathname = usePathname();
+    // Simple active check: exact match or starts with if it's not root
+    const isActive = to === "/" ? pathname === "/" : pathname?.startsWith(to);
+    const isPending = false; // Not supported in this simplified version
+
+    let finalClassName: string | undefined = "";
+    if (typeof className === "function") {
+      finalClassName = className({ isActive, isPending });
+    } else {
+      finalClassName = cn(className, isActive && activeClassName, isPending && pendingClassName);
+    }
+
     return (
-      <RouterNavLink
+      <Link
         ref={ref}
-        to={to}
-        className={({ isActive, isPending }) =>
-          cn(className, isActive && activeClassName, isPending && pendingClassName)
-        }
+        href={to}
+        className={finalClassName}
         {...props}
       />
     );
-  },
+  }
 );
 
 NavLink.displayName = "NavLink";

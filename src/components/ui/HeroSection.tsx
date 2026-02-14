@@ -1,3 +1,4 @@
+import Image from "next/image";
 import logo from "@/assets/logo.jpeg";
 import { ChevronDown } from "lucide-react";
 
@@ -50,7 +51,7 @@ const HeroSection = () => {
 
       {/* Logo */}
       <div className="relative z-10 mb-6">
-        <img
+        <Image
           src={logo}
           alt="ShaadiNation"
           className="w-40 h-40 md:w-56 md:h-56 object-contain rounded-full shadow-xl ring-4 ring-gold/30"

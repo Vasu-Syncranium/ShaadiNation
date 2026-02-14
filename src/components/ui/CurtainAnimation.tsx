@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import Image from "next/image";
 import logo from "@/assets/logo.jpeg";
 
 const CurtainAnimation = ({ onComplete }: { onComplete: () => void }) => {
@@ -52,7 +53,7 @@ const CurtainAnimation = ({ onComplete }: { onComplete: () => void }) => {
         aria-label="Enter site"
       >
         <div className="logo-pulse-ring relative">
-          <img
+          <Image
             src={logo}
             alt="ShaadiNation"
             className="w-48 h-48 md:w-64 md:h-64 object-contain rounded-full shadow-2xl ring-4 ring-gold/40 transition-transform duration-300 group-hover:scale-105"

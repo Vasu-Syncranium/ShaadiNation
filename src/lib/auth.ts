@@ -167,3 +167,115 @@ export function clearAuthToken(): void {
 export function clearAuthSession(): void {
     logout();
 }
+
+// User Management Types
+export type UserRole = 'super-admin' | 'admin' | 'editor';
+
+export interface AdminUserInfo {
+    uid: string;
+    email: string;
+    username: string;
+    role: UserRole;
+    createdAt: string;
+    lastLogin?: string;
+}
+
+// User Management Functions (Mock Implementation without Admin SDK)
+
+/**
+ * Check if the current user is a super admin
+ */
+export function isSuperAdmin(): boolean {
+    const email = getUserEmail();
+    // Hardcoded check for the main admin email
+    return email === 'admin@shaadination.com';
+}
+
+/**
+ * List all users
+ */
+export async function listUsers(): Promise<{ users: AdminUserInfo[] } | { error: string }> {
+    // Mock data for development/demo
+    // In a real app with Firebase Admin, this would call a Cloud Function or API route
+
+    // Check local storage for mocked users
+    let mockUsers: AdminUserInfo[] = [
+        {
+            uid: 'admin-1',
+            email: 'admin@shaadination.com',
+            username: 'admin',
+            role: 'super-admin',
+            createdAt: new Date().toISOString()
+        }
+    ];
+
+    if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('shaadination_mock_users');
+        if (stored) {
+            try {
+                mockUsers = JSON.parse(stored);
+            } catch (e) {
+                console.error('Failed to parse mock users', e);
+                return { error: 'Failed to parse mock users' };
+            }
+        } else {
+            // Initialize with default admin
+            localStorage.setItem('shaadination_mock_users', JSON.stringify(mockUsers));
+        }
+    }
+
+    return { users: mockUsers };
+}
+
+/**
+ * Create a new user
+ */
+export async function createUser(username: string, password: string, role: UserRole): Promise<{ success: boolean; error?: string; user?: AdminUserInfo }> {
+    // Mock implementation
+    if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('shaadination_mock_users');
+        const users: AdminUserInfo[] = stored ? JSON.parse(stored) : [];
+
+        if (users.find(u => u.username === username)) {
+            return { success: false, error: 'Username already exists' };
+        }
+
+        const newUser: AdminUserInfo = {
+            uid: `user-${Date.now()}`,
+            email: `${username}@example.com`,
+            username,
+            role,
+            createdAt: new Date().toISOString()
+        };
+
+        users.push(newUser);
+        localStorage.setItem('shaadination_mock_users', JSON.stringify(users));
+
+        return { success: true, user: newUser };
+    }
+
+    return { success: false, error: 'Cannot create user in this environment' };
+}
+
+/**
+ * Delete a user
+ */
+export async function deleteUser(username: string): Promise<{ success: boolean; error?: string }> {
+    // Mock implementation
+    if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('shaadination_mock_users');
+        if (!stored) return { success: false, error: 'No users found' };
+
+        const users: AdminUserInfo[] = JSON.parse(stored);
+        const filtered = users.filter(u => u.username !== username);
+
+        if (filtered.length === users.length) {
+            return { success: false, error: 'User not found' };
+        }
+
+        localStorage.setItem('shaadination_mock_users', JSON.stringify(filtered));
+        return { success: true };
+    }
+
+    return { success: false, error: 'Cannot delete user in this environment' };
+}

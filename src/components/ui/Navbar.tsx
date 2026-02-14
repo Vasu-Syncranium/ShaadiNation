@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import logo from "@/assets/logo.jpeg";
 
 const Navbar = () => {
@@ -19,7 +20,7 @@ const Navbar = () => {
 
         {/* Centered logo */}
         <div className="absolute left-1/2 -translate-x-1/2">
-          <img src={logo} alt="ShaadiNation" className="h-10 md:h-12 w-auto rounded-full" />
+          <Image src={logo} alt="ShaadiNation" className="h-10 md:h-12 w-auto rounded-full" />
         </div>
 
         {/* Placeholder right side */}

@@ -15,6 +15,7 @@
 // export default ComingSoon;
 
 import React from 'react';
+import Image from 'next/image';
 import Logo from "@/assets/Shaadi Nation Logo.png";
 const ComingSoon = () => {
   return (
@@ -23,7 +24,7 @@ const ComingSoon = () => {
         <h1 style={styles.header}>Launching Soon...</h1>
 
         <div style={styles.logoContainer}>
-          <img src={Logo} className="w-full max-w-xl h-auto object-contain rounded-lg " alt="Logo" />
+          <Image src={Logo} className="w-full max-w-xl h-auto object-contain rounded-lg " alt="Logo" />
         </div>
 
         <p style={styles.tagline}>
@@ -151,8 +152,9 @@ const styles: { [key: string]: React.CSSProperties } = {
 };
 
 // Add media query styles for hover effects
-const styleSheet = document.createElement("style");
-styleSheet.textContent = `
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement("style");
+  styleSheet.textContent = `
   @media (hover: hover) {
     a:hover {
       opacity: 0.8;
@@ -167,8 +169,6 @@ styleSheet.textContent = `
     /* Small mobile adjustments are handled by clamp() */
   }
 `;
-
-if (typeof document !== 'undefined') {
   document.head.appendChild(styleSheet);
 }
 
