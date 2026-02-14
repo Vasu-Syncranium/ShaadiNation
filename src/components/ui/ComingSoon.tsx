@@ -26,7 +26,7 @@ const ComingSoon = () => {
         <div style={styles.logoContainer}>
           <Image
             src={Logo}
-            width={550}                // 👈 fixed width
+            width={500}                // 👈 fixed width
             height={0}                 // 👈 can be 0 when using style height:auto
             style={{ height: "auto" }}
             className="rounded-lg object-contain"
