@@ -24,9 +24,15 @@ const ComingSoon = () => {
         <h1 style={styles.header}>Launching Soon...</h1>
 
         <div style={styles.logoContainer}>
-          <Image src={Logo} className="w-full max-w-xl h-auto object-contain rounded-lg " alt="Logo" />
+          <Image
+            src={Logo}
+            width={550}                // 👈 fixed width
+            height={0}                 // 👈 can be 0 when using style height:auto
+            style={{ height: "auto" }}
+            className="rounded-lg object-contain"
+            alt="Logo"
+          />
         </div>
-
         <p style={styles.tagline}>
           Bespoke destination weddings and iconic Big Fat Indian weddings across India and international destinations — curated with timeless elegance and flawless execution.
         </p>
